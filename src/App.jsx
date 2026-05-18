@@ -38,6 +38,8 @@ function App() {
         setCurrentState(true)
     }
 
+    const draw = element.every((isNull) => isNull !== null)
+
     return (
         <div className='min-h-dvh w-dvw bg-linear-to-br from-slate-950 via-slate-900 to-slate-950 flex flex-col justify-center items-center overflow-hidden relative'>
             {/* Background Animation Elements */}
@@ -54,21 +56,28 @@ function App() {
 
             {/* Status Section */}
             <div className='relative z-10 mb-16'>
-                {!isWon
+                {isWon
                     ? <div className='flex flex-col items-center gap-4'>
-                        <span className='text-xs font-semibold tracking-widest text-slate-400 uppercase'>Current Turn</span>
-                        <div className='flex items-center gap-6 px-8 py-6 bg-slate-800/40 backdrop-blur-xl border border-slate-700/50 rounded-2xl shadow-2xl hover:shadow-blue-500/20 transition-shadow duration-300'>
-                            <span className='font-mono text-lg font-light text-slate-300'>PLAYER</span>
-                            {currentState ? <Cross /> : <Circle />}
-                        </div>
-                    </div>
-                    : <div className='flex flex-col items-center gap-4'>
                         <span className='text-xs font-semibold tracking-widest text-emerald-400 uppercase'>🎉 Victory</span>
                         <div className='flex items-center gap-6 px-8 py-6 bg-linear-to-r from-emerald-900/40 to-emerald-800/40 backdrop-blur-xl border border-emerald-600/50 rounded-2xl shadow-2xl shadow-emerald-500/20'>
                             {currentState ? <Circle /> : <Cross />}
                             <span className='font-mono text-lg font-light text-white'>WINS!</span>
                         </div>
                     </div>
+                    : draw
+                        ? <div className='flex flex-col items-center gap-4'>
+                            <span className='text-xs font-semibold tracking-widest text-yellow-400 uppercase'>🤝 Draw</span>
+                            <div className='flex items-center gap-6 px-8 py-6 bg-linear-to-r from-yellow-900/40 to-yellow-800/40 backdrop-blur-xl border border-yellow-600/50 rounded-2xl shadow-2xl shadow-yellow-500/20'>
+                                <span className='font-mono text-lg font-light text-white'>DRAW</span>
+                            </div>
+                        </div>
+                        : <div className='flex flex-col items-center gap-4'>
+                            <span className='text-xs font-semibold tracking-widest text-slate-400 uppercase'>Current Turn</span>
+                            <div className='flex items-center gap-6 px-8 py-6 bg-slate-800/40 backdrop-blur-xl border border-slate-700/50 rounded-2xl shadow-2xl hover:shadow-blue-500/20 transition-shadow duration-300'>
+                                <span className='font-mono text-lg font-light text-slate-300'>PLAYER</span>
+                                {currentState ? <Cross /> : <Circle />}
+                            </div>
+                        </div>
                 }
             </div>
 
@@ -96,7 +105,7 @@ function App() {
             {/* Restart Button */}
             <div className='relative z-10 mt-16'>
                 {
-                    isWon
+                    isWon || draw
                         ? <button className='px-10 py-3 bg-linear-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 text-white font-semibold rounded-xl transition-all duration-300 shadow-lg shadow-blue-500/40 hover:shadow-blue-500/60 hover:scale-105 active:scale-95'
                             onClick={reset}
                         >
